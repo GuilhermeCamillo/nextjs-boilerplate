@@ -5,8 +5,7 @@ export const config = {
   matcher: [
     {
       source:
-        "/((?!api|_next/static|_next/image|media|fonts|favicon.ico|favicon.png).*)",
-      missing: [{ type: "header", key: "next-action" }],
+        "/((?!api|_next/static|_next/image|media|fonts|favicon.ico|favicon.png|api/logout).*)",
     },
   ],
 };
@@ -15,9 +14,12 @@ const publicRoutes = ["/", "/cadastro", "/login", "/register"];
 
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
-
+  
   if (publicRoutes.includes(pathname)) {
     const session = await AuthService.isSessionValid();
+    if (pathname == "/") {
+      return NextResponse.next();
+    }
     if (session) {
       return NextResponse.redirect(new URL("/tasks", req.url));
     }

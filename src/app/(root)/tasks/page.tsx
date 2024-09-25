@@ -15,7 +15,7 @@ export default async function TasksPage() {
       <div className="flex flex-row w-full items-center justify-between">
         <h1 className="font-bold text-lg">Tarefas</h1>
         {/* <Link
-          href="logout"
+          href="/api/logout"
           className="flex flex-row gap-2 border rounded-sm py-1 px-3 text-sm items-center font-medium hover:bg-slate-200"
         >
           SAIR <LogOut className="w-3 h-3" />

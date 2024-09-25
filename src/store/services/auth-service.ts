@@ -50,7 +50,7 @@ async function getSessionUserId() {
     const { value } = sessionCookie;
     const { sub } = await openSessionToken(value);
 
-    return Number(sub);
+    return sub;
   }
 
   return null;

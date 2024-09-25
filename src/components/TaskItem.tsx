@@ -17,12 +17,18 @@ const TaskItem = ({ item }: { item: Task }) => {
           : "bg-white hover:bg-gray-100"
       )}
     >
-      <div className="flex flex-row gap-2 items-center">
-        <Checkbox checked={item.completed} onCheckedChange={(e) => updateTask(item.id, Boolean(e))} />
-        <p>{item.id}</p>
-        <p>{item.title}</p>
+      <div className="flex flex-row gap-2 items-center text-wrap">
+        <Checkbox
+          checked={item.completed}
+          onCheckedChange={(e) => updateTask(item.id, Boolean(e))}
+        />
+        <p className="break-all">{item.title}</p>
       </div>
-      <Button variant="ghost" onClick={() => deleteTask(item.id)} className="text-red-500 hover:text-red-600 focus:outline-none py-1 px-2">
+      <Button
+        variant="ghost"
+        onClick={() => deleteTask(item.id)}
+        className="text-red-500 hover:text-red-600 focus:outline-none py-1 px-2"
+      >
         <TrashIcon className="w-5 h-5" />
       </Button>
     </div>
