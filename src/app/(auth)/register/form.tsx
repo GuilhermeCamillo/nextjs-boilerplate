@@ -30,7 +30,6 @@ const Form = () => {
     validateOnBlur: true,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
       await createAccount({
         firstName: values.firstName,
         lastName: values.lastName,

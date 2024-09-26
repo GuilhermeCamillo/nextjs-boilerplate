@@ -1,14 +1,12 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import db from "../../../prisma/database";
-import AuthService from "../services/auth-service";
-import { sendDiscordMessage } from "../services/discord-service";
+import { api } from "../axios";
 
 export const getTasks = async () => {
   try {
-    const userId = await AuthService.getSessionUserId();
-    const tasks = await db.task.findMany({ where: { userId: userId! } });
-    return tasks;
+    const tasks = await api.get("/api/tasks");
+    return tasks.data;
   } catch (error) {
     console.log(error);
   }
@@ -16,20 +14,9 @@ export const getTasks = async () => {
 
 export const createTask = async (title: string) => {
   try {
-    const userId = await AuthService.getSessionUserId();
-    if (userId) {
-      const task = await db.task.create({
-        data: {
-          title: title,
-          userId: userId,
-        },
-      });
-
-      await sendDiscordMessage(`Task ${title} criada \nAAAAAAAAAAAAAAA`)
-
-      revalidatePath("/tasks");
-      return task;
-    }
+    const task = await api.post("/api/tasks", { title: title });
+    revalidatePath("/tasks");
+    return task.data;
   } catch (error) {
     console.log(error);
   }
